@@ -125,7 +125,7 @@ public class DefaultCore implements Core {
         throws TransactionException {
         GlobalSession session = GlobalSession.createGlobalSession(applicationId, transactionServiceGroup, name,
             timeout);
-        session.addSessionLifecycleListener(SessionHolder.getRootSessionManager());
+        session.addSessionLifecycleListener(SessionHolder.getRootSessionManager());//会话状态变更
 
         session.begin();
 

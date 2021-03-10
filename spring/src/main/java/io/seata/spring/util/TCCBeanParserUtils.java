@@ -54,7 +54,7 @@ public class TCCBeanParserUtils {
                 //LocalTCC
                 return isTccProxyTargetBean(remotingDesc);
             } else {
-                // sofa:reference / dubbo:reference, factory bean
+                // sofa:reference / dubbo:reference, factory bean  dubbo reference(ReferenceBean的情况)
                 return false;
             }
         } else {
@@ -67,7 +67,7 @@ public class TCCBeanParserUtils {
                     return false;
                 }
             } else {
-                return isTccProxyTargetBean(remotingDesc);
+                return isTccProxyTargetBean(remotingDesc);//dubbo reference的情况
             }
         }
     }

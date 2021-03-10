@@ -74,7 +74,7 @@ public class TccActionInterceptor implements MethodInterceptor {
         //try method
         if (businessAction != null) {
             //save the xid
-            String xid = RootContext.getXID();
+            String xid = RootContext.getXID();//当前全局事务id
             //save the previous branchType
             String previousBranchType = RootContext.getBranchType();
             RootContext.bindBranchType(BranchType.TCC);

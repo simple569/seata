@@ -151,7 +151,7 @@ public abstract class AbstractRMHandler extends AbstractExceptionHandler
     }
 
     @Override
-    public void onResponse(AbstractResultMessage response, RpcContext context) {
+    public void onResponse(AbstractResultMessage response, RpcContext context) {//收到事务提交消息
         LOGGER.info("the rm client received response msg [{}] from tc server.", response.toString());
     }
 

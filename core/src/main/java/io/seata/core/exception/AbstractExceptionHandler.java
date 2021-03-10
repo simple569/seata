@@ -98,7 +98,7 @@ public abstract class AbstractExceptionHandler {
         }
 
         @Override
-        public void onException(T request, S response, Exception rex) {
+        public void onException(T request, S response, Exception rex) {//设置响应错误
             response.setResultCode(ResultCode.Failed);
             response.setMsg("RuntimeException[" + rex.getMessage() + "]");
         }

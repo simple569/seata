@@ -61,7 +61,7 @@ public class DefaultValues {
     /**
      * The constant DEFAULT_STORE_DB_GLOBAL_TABLE.
      */
-    public static final String DEFAULT_STORE_DB_GLOBAL_TABLE = "global_table";
+    public static final String DEFAULT_STORE_DB_GLOBAL_TABLE = "global_table";// global_session表
 
     /**
      * The constant DEFAULT_STORE_DB_BRANCH_TABLE.

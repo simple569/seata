@@ -62,7 +62,7 @@ public class DefaultTransactionManager implements TransactionManager {
         GlobalCommitRequest globalCommit = new GlobalCommitRequest();
         globalCommit.setXid(xid);
         GlobalCommitResponse response = (GlobalCommitResponse) syncCall(globalCommit);
-        return response.getGlobalStatus();
+        return response.getGlobalStatus();//如果发送commit消息失败呢？
     }
 
     @Override

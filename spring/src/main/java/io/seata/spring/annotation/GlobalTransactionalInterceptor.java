@@ -73,10 +73,10 @@ public class GlobalTransactionalInterceptor implements ConfigurationChangeListen
     private final FailureHandler failureHandler;
     private volatile boolean disable;
     private static int degradeCheckPeriod;
-    private static volatile boolean degradeCheck;
+    private static volatile boolean degradeCheck;//降级
     private static int degradeCheckAllowTimes;
     private static volatile Integer degradeNum = 0;
-    private static volatile Integer reachNum = 0;
+    private static volatile Integer reachNum = 0;//如果degradeNum >= degradeCheckAllowTimes 那么得reachNum > degradeCheckAllowTimes 恢复全局事务
     private static final EventBus EVENT_BUS = new GuavaEventBus("degradeCheckEventBus", true);
     private static ScheduledThreadPoolExecutor executor =
         new ScheduledThreadPoolExecutor(1, new NamedThreadFactory("degradeCheckWorker", 1, true));
@@ -117,7 +117,7 @@ public class GlobalTransactionalInterceptor implements ConfigurationChangeListen
                 getAnnotation(method, targetClass, GlobalTransactional.class);
             final GlobalLock globalLockAnnotation = getAnnotation(method, targetClass, GlobalLock.class);
             boolean localDisable = disable || (degradeCheck && degradeNum >= degradeCheckAllowTimes);
-            if (!localDisable) {
+            if (!localDisable) {//禁用事务
                 if (globalTransactionalAnnotation != null) {
                     return handleGlobalTransaction(methodInvocation, globalTransactionalAnnotation);
                 } else if (globalLockAnnotation != null) {
@@ -264,7 +264,7 @@ public class GlobalTransactionalInterceptor implements ConfigurationChangeListen
     public static void onDegradeCheck(DegradeCheckEvent event) {
         if (event.isRequestSuccess()) {
             if (degradeNum >= degradeCheckAllowTimes) {
-                reachNum++;
+                reachNum++;//可达次数
                 if (reachNum >= degradeCheckAllowTimes) {
                     reachNum = 0;
                     degradeNum = 0;
@@ -275,7 +275,7 @@ public class GlobalTransactionalInterceptor implements ConfigurationChangeListen
             } else if (degradeNum != 0) {
                 degradeNum = 0;
             }
-        } else {
+        } else {//不可用
             if (degradeNum < degradeCheckAllowTimes) {
                 degradeNum++;
                 if (degradeNum >= degradeCheckAllowTimes) {

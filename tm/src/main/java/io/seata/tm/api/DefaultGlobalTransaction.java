@@ -46,7 +46,7 @@ public class DefaultGlobalTransaction implements GlobalTransaction {
     private TransactionManager transactionManager;
 
     private String xid;
-
+    /**全局的事务状态*/
     private GlobalStatus status;
 
     private GlobalTransactionRole role;
@@ -90,7 +90,7 @@ public class DefaultGlobalTransaction implements GlobalTransaction {
 
     @Override
     public void begin(int timeout, String name) throws TransactionException {
-        if (role != GlobalTransactionRole.Launcher) {
+        if (role != GlobalTransactionRole.Launcher) {//启动事务者
             assertXIDNotNull();
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Ignore Begin(): just involved in global transaction [{}]", xid);

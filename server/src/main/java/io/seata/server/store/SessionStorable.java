@@ -15,7 +15,7 @@
  */
 package io.seata.server.store;
 
-/**
+/**    <p>可存储会话对象</p>
  * The interface Session storable.
  *
  * @author slievrly
